@@ -7,28 +7,43 @@ let employees = [
 {name: "Kerry", hourlyRate: 33, hoursWorked: 40}
 ];
 
- const regularHoursLimit = 40
- const overtimePayMultiplier = 1.5
-
  // step 3 write a function
-function calculatedBasePay (Rate, hours) {
-    if (hours <= 40){
-        return Rate * hours;
-}
-}
-
-function calculateOvertimePay (Rate, hours) { 
-    if (hours > 40)
-        return 1.5 * 40;
-}
-function calculateTaxes(grossPay){
-    const taxRate = .15;
-    const taxAmount = grosspay * taxRate;
-    const netPay = grossPay - taxAmount;
-    return netPay;
-}
-function processPayroll (employees){
-    const employee = {
-        name: basePay, overtimePay, grossPay, netPay
+function calculatedBasePay (rate, hours) {
+    if ( hours = 40) {
+        return rate * hours;
+    } else {
     }
 }
+
+
+function calculateOvertimePay (rate, hours) { 
+    let overtimeHours = hours - 40;
+    if (hours > 40)
+        return overtimeHours * rate * 1.5 ;
+}
+let tax = .15;
+function calculateTaxes(grossPay){
+    return grossPay * (1- tax);
+};
+function processPayroll (employee){
+        let basePay = calculatedBasePay(employee.hourlyRate, employee.hoursWorked);
+        let netPay = calculateTaxes(basePay);
+        return { 
+
+            name: employee.name,
+            basepay: employee.hourlyRate * Math.min(employee.hoursWorked, 40),
+            overtimePay: basePay - (employee.hourlyRate) * Math.min(employee.hoursWorked, 40),
+            grossPay: basePay,
+            netPay: netPay
+        };
+    };
+
+    for (i = 0; i < employees.length; i++) {
+        let payrollInformation = processPayroll(employees[i]);
+        console.log(`Name: ${payrollInformation.name}` );
+        console.log(`Base Pay: $${payrollInformation.basepay.toFixed(2)}`);
+        console.log(`Overtime Pay:$${payrollInformation.overtimePay.toFixed(2)}`);
+        console.log(`Gross Pay: $${payrollInformation.grossPay.toFixed(2)}`);
+        console.log(`Net Pay: $${payrollInformation.netPay.toFixed(2)}`);
+        console.log (`--------------------------------------`);
+    }
