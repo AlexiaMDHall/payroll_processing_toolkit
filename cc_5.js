@@ -9,35 +9,39 @@ let employees = [
 
  // step 3 write a function
 function calculatedBasePay (rate, hours) {
-    if ( hours = 40) {
         return rate * hours;
-    } else {
-    }
 }
 
-
-function calculateOvertimePay (rate, hours) { 
+function calculateOvertimePay (rate, hours ) { 
     let overtimeHours = hours - 40;
-    if (hours > 40)
         return overtimeHours * rate * 1.5 ;
-}
+};
+
 let tax = .15;
 function calculateTaxes(grossPay){
     return grossPay * (1- tax);
 };
+
 function processPayroll (employee){
-        let basePay = calculatedBasePay(employee.hourlyRate, employee.hoursWorked);
-        let netPay = calculateTaxes(basePay);
+        let basePay = calculatedBasePay(employee.hourlyRate, employee.hoursWorked, 40);
+        let overtimePay = 0;
+        let grossPay = basePay + overtimePay
+        let netPay = calculateTaxes(grossPay);
+
+        if (employee.hoursWorked > 40) {
+            overtimePay = calculateOvertimePay(employee.hourlyRate, employee. hoursWorked);
+        }
         return { 
 
             name: employee.name,
-            basepay: employee.hourlyRate * Math.min(employee.hoursWorked, 40),
-            overtimePay: basePay - (employee.hourlyRate) * Math.min(employee.hoursWorked, 40),
-            grossPay: basePay,
+            basepay: basePay,
+            overtimePay: overtimePay,
+            grossPay: grossPay,
             netPay: netPay
         };
     };
 
+    // upload to console
     for (i = 0; i < employees.length; i++) {
         let payrollInformation = processPayroll(employees[i]);
         console.log(`Name: ${payrollInformation.name}` );
